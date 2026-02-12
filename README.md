@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Future Wallet
 
-## Getting Started
+Deterministic financial projection engine and UI built with Next.js 14 + TypeScript.
 
-First, run the development server:
+## MVP Status (Bare Minimum)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The current engine satisfies the core TASK.md requirements for:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Determinism and daily simulation horizon
+- DAG dependency resolution with cycle protection
+- FX transaction-time realization
+- Asset liquidation under deficit with constraints
+- Tax handling on realized gains
+- Branching/counterfactual simulation support
+- Output packet metrics: balance bands (Exp/P5/P95), collapse risk/timing, vibe, credit score, RSI, NAV, liquidity ratio
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Requirement-to-Test Coverage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Determinism: `tests/engine/determinism.test.ts`
+- DAG integrity: `tests/engine/dag.test.ts`
+- Daily horizon and output shape/perf: `tests/engine/horizon.test.ts`
+- FX realization: `tests/engine/fx-realization.test.ts`
+- Liquidation behavior: `tests/engine/liquidation.test.ts`
+- Realized-gains taxation: `tests/engine/tax-realized-gains.test.ts`
+- Branching/counterfactual behavior: `tests/engine/counterfactual.test.ts`
 
-## Learn More
+## Run
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Dev server: `npm run dev`
+- Focused compliance tests:
+	- `npm test -- tests/engine/determinism.test.ts tests/engine/dag.test.ts tests/engine/fx-realization.test.ts tests/engine/liquidation.test.ts tests/engine/tax-realized-gains.test.ts tests/engine/counterfactual.test.ts tests/engine/horizon.test.ts`
+- Full suite: `npm test`
