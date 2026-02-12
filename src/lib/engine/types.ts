@@ -169,6 +169,10 @@ export interface SimulationSummary {
   collapseDay: number | null;
   /** Shock Resilience Index (0-100) */
   shockResilienceIndex: number;
+  /** Average number of fired shocks per 30-day window */
+  shockClusteringDensity: number;
+  /** Mean absolute monetary magnitude of fired shocks */
+  shockIntensityAverage: number;
   /** Recovery slope (balance restoration rate after deficit) */
   recoverySlope: number;
   /** Vibe / pet tier */

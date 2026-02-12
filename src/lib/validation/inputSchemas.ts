@@ -110,6 +110,8 @@ export const SimulationSummarySchema = z.object({
   collapseProbability: z.number(),
   collapseDay: z.number().nullable(),
   shockResilienceIndex: z.number(),
+  shockClusteringDensity: z.number(),
+  shockIntensityAverage: z.number(),
   recoverySlope: z.number(),
   vibeTier: z.enum(['Thriving', 'Stable', 'Stressed', 'Crisis', 'Collapse']),
   liquidityRatio: z.number(),

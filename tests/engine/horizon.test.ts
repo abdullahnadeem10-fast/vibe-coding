@@ -56,12 +56,16 @@ describe('Simulation Horizon', () => {
     expect(typeof s.finalCreditScore).toBe('number');
     expect(typeof s.collapseProbability).toBe('number');
     expect(typeof s.shockResilienceIndex).toBe('number');
+    expect(typeof s.shockClusteringDensity).toBe('number');
+    expect(typeof s.shockIntensityAverage).toBe('number');
     expect(typeof s.recoverySlope).toBe('number');
     expect(typeof s.liquidityRatio).toBe('number');
     expect(typeof s.deficitDays).toBe('number');
     expect(['Thriving', 'Stable', 'Stressed', 'Crisis', 'Collapse']).toContain(s.vibeTier);
     expect(s.collapseProbability).toBeGreaterThanOrEqual(0);
     expect(s.collapseProbability).toBeLessThanOrEqual(1);
+    expect(s.shockClusteringDensity).toBeGreaterThanOrEqual(0);
+    expect(s.shockIntensityAverage).toBeGreaterThanOrEqual(0);
   });
 
   it('5-year simulation completes in under 3 seconds', () => {

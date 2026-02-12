@@ -198,6 +198,11 @@ export function simulate(
   );
 
   const rsi = computeRSI(liquidityRatio, debtServiceRatio, state.creditScore, deficitDays);
+  const shockClusteringDensity = computeShockClusteringDensity(
+    shockNode.firedShocks.length,
+    input.horizonDays,
+  );
+  const shockIntensityAverage = computeShockIntensityAverage(shockNode.firedShocks);
 
   // Recovery slope: average rate of balance increase after deficit periods
   const recoverySlope = computeRecoverySlope(dailySnapshots);
@@ -217,6 +222,8 @@ export function simulate(
     collapseProbability,
     collapseDay,
     shockResilienceIndex: rsi,
+    shockClusteringDensity,
+    shockIntensityAverage,
     recoverySlope,
     vibeTier,
     liquidityRatio,
@@ -303,4 +310,19 @@ function computeRecoverySlope(snapshots: DaySnapshot[]): number {
   }
 
   return recoveryPeriods > 0 ? totalRecovery / recoveryPeriods : 0;
+}
+
+function computeShockClusteringDensity(firedShockCount: number, horizonDays: number): number {
+  const totalDays = Math.max(1, horizonDays + 1);
+  return (firedShockCount / totalDays) * 30;
+}
+
+function computeShockIntensityAverage(
+  firedShocks: { day: number; shockId: string; amount: number }[],
+): number {
+  if (firedShocks.length === 0) {
+    return 0;
+  }
+  const totalAbsAmount = firedShocks.reduce((sum, shock) => sum + Math.abs(shock.amount), 0);
+  return totalAbsAmount / firedShocks.length;
 }
